@@ -9,25 +9,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.asus.cameraapp.MainActivity"
     android:orientation="vertical"
-    >
+    android:background="#007bff">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cameraButton"
-        android:src="@android:drawable/ic_menu_camera"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="101dp"
-        android:layout_marginStart="101dp" />
+        android:src="@drawable/btn_camera"
+        android:layout_marginBottom="59dp"
+        android:visibility="visible"
+        android:adjustViewBounds="false"
+        android:baselineAlignBottom="false"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:cropToPadding="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:background="#007bff"
+        android:layout_above="@+id/tempButton"
+        android:layout_toLeftOf="@+id/tempButton"
+        android:layout_toStartOf="@+id/tempButton" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_marginBottom="53dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/img_logo"
+        android:layout_marginBottom="91dp"
         android:layout_above="@+id/cameraButton"
         android:layout_centerHorizontal="true" />
 
@@ -35,20 +44,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/galleryButton"
-        android:src="@android:drawable/ic_menu_gallery"
-        android:layout_marginLeft="47dp"
-        android:layout_marginStart="47dp"
+        android:src="@drawable/btn_gallery"
         android:layout_alignTop="@+id/cameraButton"
-        android:layout_toRightOf="@+id/cameraButton"
-        android:layout_toEndOf="@+id/cameraButton" />
+        android:layout_toRightOf="@+id/tempButton"
+        android:layout_toEndOf="@+id/tempButton"
+        android:background="#007bff" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tempButton"
         android:src="@android:drawable/checkbox_on_background"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/cameraButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

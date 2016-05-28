@@ -1,9 +1,17 @@
 package com.example.asus.cameraapp;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.asus.cameraapp.R;
 
@@ -12,6 +20,7 @@ import com.example.asus.cameraapp.R;
  */
 public class AddStickerActivity extends AppCompatActivity {
 
+    private ImageView imgTest;
     private ImageButton homeButton;
     private ImageButton addButton;
     private ImageButton saveButton;
@@ -26,6 +35,10 @@ public class AddStickerActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
+
+        imgTest = (ImageView)findViewById(R.id.img_test);
+        imgTest.setImageResource(R.drawable.monkey);
+
         homeButton = (ImageButton) findViewById(R.id.btn_home);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +58,10 @@ public class AddStickerActivity extends AppCompatActivity {
         saveButton = (ImageButton) findViewById(R.id.btn_save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onClick(View v) {
+                Bitmap bitmap = ((BitmapDrawable) imgTest.getDrawable()).getBitmap();
+                Save savefile = new Save();
+                savefile.SaveImage(getApplicationContext() ,bitmap);
             }
         });
 
@@ -70,9 +85,8 @@ public class AddStickerActivity extends AppCompatActivity {
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                startActivity(new Intent(AddStickerActivity.this,InfoPopUp.class));
             }
         });
     }
-
 }
