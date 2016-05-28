@@ -43,7 +43,8 @@ public class AddStickerActivity extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(AddStickerActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

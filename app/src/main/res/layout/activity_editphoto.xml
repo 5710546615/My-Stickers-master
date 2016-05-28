@@ -1,68 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:context=".EditPhotoActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="CROP PHOTO"
-        android:id="@+id/txt_crop"
-        android:layout_alignWithParentIfMissing="false"
-        android:textSize="50sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="44dp"
-        android:layout_marginStart="44dp" />
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".EditPhotoActivity"
+    android:background="#f4c45b">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/img_test"
         android:src="@drawable/monkey"
-        android:layout_below="@+id/txt_crop"
-        android:layout_alignLeft="@+id/txt_crop"
-        android:layout_alignStart="@+id/txt_crop"
-        android:layout_marginTop="43dp" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/btn_square"
-        android:src="@android:drawable/checkbox_off_background"
-        android:layout_alignParentBottom="true"
+        android:src="@drawable/btn_square"
+        android:background="#f4c45b"
+        android:layout_alignTop="@+id/btn_rotate"
         android:layout_toRightOf="@+id/btn_rotate"
-        android:layout_alignTop="@+id/btn_rotate" />
+        android:layout_toEndOf="@+id/btn_rotate"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_rotate"
-        android:src="@android:drawable/ic_menu_rotate"
+        android:src="@drawable/btn_rotate"
+        android:background="#f4c45b"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp" />
 
     <ImageButton
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_rectangle"
-        android:src="@android:drawable/bottom_bar"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btn_square"
-        android:layout_toEndOf="@+id/btn_square" />
+        android:src="@drawable/btn_rectangle"
+        android:background="#f4c45b"
+        android:layout_alignTop="@+id/btn_square"
+        android:layout_toLeftOf="@+id/btn_done"
+        android:layout_toStartOf="@+id/btn_done"
+        android:layout_marginRight="40dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginLeft="30dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_done"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btn_rectangle"
-        android:layout_toEndOf="@+id/btn_rectangle"
-        android:src="@android:drawable/checkbox_on_background" />
+        android:src="@drawable/btn_done"
+        android:background="#f4c45b"
+        android:layout_alignTop="@+id/btn_rectangle"
+        android:layout_alignEnd="@+id/img_test"
+        android:layout_alignParentEnd="false" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_crop"
+        android:src="@drawable/txt_crop"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
