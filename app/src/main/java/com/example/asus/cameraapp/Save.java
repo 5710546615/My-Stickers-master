@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 public class Save {
     private Context TheThis;
-    private String NameOfFolder = "/Amir_Paint";
-    private String NameOfFile   = "APaintImage";
+    private String NameOfFolder = "/MyStickers";
+    private String NameOfFile   = "MyImage:";
 
     public void SaveImage(Context context,Bitmap ImageToSave){
         TheThis = context;
@@ -57,7 +57,7 @@ public class Save {
 
     private String getCurrentDateAndTime() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         String formattedDate = df.format(c.getTime());
         return formattedDate;
     }

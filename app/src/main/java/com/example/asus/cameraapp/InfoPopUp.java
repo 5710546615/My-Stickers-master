@@ -4,12 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
-/**
- * Created by moopiing on 28/5/2559.
- */
 public class InfoPopUp extends Activity{
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

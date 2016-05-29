@@ -6,12 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by Asus on 28/5/2559.
- */
 public class DetailsActivity extends ActionBarActivity {
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_activity);

@@ -14,8 +14,6 @@ import java.io.File;
 public class MainActivity extends Activity {
     ImageButton cameraButton, galleryButton;
     ImageButton tempButton;
-//    shareButton, stickerButton;
-    //ImageView imageView;
 
     static final int CAM_REQUEST = 1;
     static int countImage = 0;
@@ -26,12 +24,8 @@ public class MainActivity extends Activity {
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         galleryButton = (ImageButton) findViewById(R.id.galleryButton);
         tempButton = (ImageButton) findViewById(R.id.tempButton);
-//        stickerButton = (ImageButton) findViewById(R.id.stickerButton);
-//        shareButton = (ImageButton) findViewById(R.id.shareButton);
 
-        //imageView = (ImageView) findViewById(R.id.image_view);
         cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = getFile();
@@ -41,15 +35,12 @@ public class MainActivity extends Activity {
             }
         });
         galleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
                 startActivity(intent);
             }
         });
         tempButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EditPhotoActivity.class);
                 startActivity(intent);
@@ -59,17 +50,15 @@ public class MainActivity extends Activity {
 
     private File getFile() {
         File folder = new File("sdcard/camera_app");
-        if(!folder.exists()) {
-            folder.mkdir();
-        }
+            if(!folder.exists()) {
+                folder.mkdir();
+            }
         File image_file = new File(folder,"cam_image"+countImage+".jpg");
         return image_file;
     }
 
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String path = "sdcard/camera_app/cam_image"+countImage+".jpg";
-        //imageView.setImageDrawable(Drawable.createFromPath(path));
     }
 
     private void addImageGallery( File file ) {

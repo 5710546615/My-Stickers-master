@@ -21,15 +21,15 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddStickerActivity"/>
+        <activity android:name=".DetailsActivity"/>
+        <activity android:name=".EditPhotoActivity"/>
         <activity android:name=".GalleryActivity" />
-        <activity android:name=".EditPhotoActivity" />
         <activity android:name=".InfoPopUp"
-            android:theme="@style/AppTheme.CustomTheme" />
-        <activity android:name=".AddStickerActivity">
+            android:theme="@style/AppTheme.CustomTheme">
         </activity>
     </application>
 
