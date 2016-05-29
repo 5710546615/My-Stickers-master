@@ -11,6 +11,14 @@
     android:orientation="vertical"
     android:background="#f4c45b">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_logo"
+        android:src="@drawable/img_logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,36 +34,20 @@
         android:focusableInTouchMode="false"
         android:longClickable="false"
         android:background="#f4c45b"
-        android:layout_above="@+id/tempButton"
-        android:layout_toLeftOf="@+id/tempButton"
-        android:layout_toStartOf="@+id/tempButton" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/img_logo"
-        android:layout_marginBottom="45dp"
-        android:layout_above="@+id/cameraButton"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginLeft="35dp"
+        android:layout_marginBottom="30dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/galleryButton"
         android:src="@drawable/btn_gallery"
-        android:layout_alignTop="@+id/cameraButton"
-        android:layout_toRightOf="@+id/tempButton"
-        android:layout_toEndOf="@+id/tempButton"
-        android:background="#f4c45b" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tempButton"
-        android:src="@android:drawable/checkbox_on_background"
+        android:background="#f4c45b"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="35dp" />
 
 </RelativeLayout>

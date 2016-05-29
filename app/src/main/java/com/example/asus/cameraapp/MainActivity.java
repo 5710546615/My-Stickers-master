@@ -1,24 +1,15 @@
 package com.example.asus.cameraapp;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,11 +19,10 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
 
-    ImageButton cameraButton, galleryButton;
-    ImageButton tempButton;
+    private ImageView logoImage;
+    private ImageButton cameraButton, galleryButton;
 
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private ImageView ivImage;
     private String userChoosenTask;
 
     boolean result=Utility.checkPermission(MainActivity.this);
@@ -41,22 +31,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_main);
 
+        logoImage = (ImageView) findViewById(R.id.img_logo);
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         galleryButton = (ImageButton) findViewById(R.id.galleryButton);
-        tempButton = (ImageButton) findViewById(R.id.tempButton);
+
+        initComponents();
+    }
+
+    private void initComponents() {
+
+        logoImage.setImageResource(R.drawable.img_logo);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 userChoosenTask ="Take Photo";
                 if(result)
                     cameraIntent();
-            }
-        });
-
-        tempButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EditPhotoActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -68,10 +58,8 @@ public class MainActivity extends Activity {
                     galleryIntent();
             }
         });
-        ivImage = (ImageView) findViewById(R.id.imageView);
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
@@ -85,16 +73,14 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void galleryIntent()
-    {
+    private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
-    private void cameraIntent()
-    {
+    private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
@@ -119,6 +105,7 @@ public class MainActivity extends Activity {
                 System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
+
         try {
             destination.createNewFile();
             fo = new FileOutputStream(destination);
@@ -130,10 +117,9 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
-        ivImage.setImageBitmap(thumbnail);
-
-//        Intent intent = new Intent(MainActivity.this, EditPhotoActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, EditPhotoActivity.class);
+        intent.putExtra("BitmapImage", thumbnail);
+        startActivity(intent);
     }
 
     private void onSelectFromGalleryResult(Intent data) {
@@ -146,13 +132,8 @@ public class MainActivity extends Activity {
             }
         }
 
-        ivImage.setImageBitmap(bm);
-
-//        Intent intent = new Intent(this, EditPhotoActivity.class);
-//        intent.putExtra("resourseInt", R.drawable.img_logo);
-//        startActivity(intent);
-
-//        Intent intent = new Intent(MainActivity.this, EditPhotoActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, EditPhotoActivity.class);
+        intent.putExtra("BitmapImage", bm);
+        startActivity(intent);
     }
 }
