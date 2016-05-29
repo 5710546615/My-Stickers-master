@@ -13,7 +13,7 @@ import android.graphics.Matrix;
 public class EditPhotoActivity extends AppCompatActivity {
 
     private ImageView cropText;
-    private ImageView image;
+    public ImageView image;
     private ImageButton rotateButton;
     private ImageButton cropButton;
     private ImageButton backButton;
@@ -29,8 +29,15 @@ public class EditPhotoActivity extends AppCompatActivity {
         cropText = (ImageView) findViewById(R.id.txt_crop);
         cropText.setImageResource(R.drawable.txt_crop);
 
+//        image = (ImageView) findViewById(R.id.img_image);
+//        image.setImageResource(R.drawable.monkey);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) { return; }
+        int res = extras.getInt("resourseInt");
         image = (ImageView) findViewById(R.id.img_image);
-        image.setImageResource(R.drawable.monkey);
+        image.setImageResource(res);
+
 
         rotateButton = (ImageButton) findViewById(R.id.btn_rotate);
         rotateButton.setOnClickListener(new View.OnClickListener() {
