@@ -72,8 +72,8 @@ public class EditPhotoActivity extends AppCompatActivity {
         doneButton = (ImageButton) findViewById(R.id.btn_done);
         doneButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                Intent intent = new Intent(EditPhotoActivity.this, AddStickerActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(EditPhotoActivity.this, AddStickerActivity.class);
+                startActivity(intent);
             }
         });
     }
