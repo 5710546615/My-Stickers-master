@@ -1,6 +1,8 @@
 package com.example.asus.cameraapp;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,8 @@ import android.widget.ImageView;
 import android.graphics.Matrix;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
@@ -27,9 +31,14 @@ public class EditPhotoActivity extends AppCompatActivity {
     private ImageButton backButton;
     private ImageButton doneButton;
 
+    private Bitmap bitmap;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editphoto);
+
+        Intent intent = getIntent();
+        bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
 
         initComponents();
     }
@@ -38,9 +47,6 @@ public class EditPhotoActivity extends AppCompatActivity {
 
         cropText = (ImageView) findViewById(R.id.txt_crop);
         cropText.setImageResource(R.drawable.txt_crop);
-
-        Intent intent = getIntent();
-        Bitmap bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
 
         image = (ImageView) findViewById(R.id.img_image);
         image.setImageBitmap(bitmap);
@@ -62,12 +68,13 @@ public class EditPhotoActivity extends AppCompatActivity {
         cropButton = (ImageButton) findViewById(R.id.btn_crop);
         cropButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent imageDownload = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent imageDownload = new Intent("com.android.camera.action.CROP");
+                imageDownload.setDataAndType(getImageUri(image.getContext(),bitmap),"image/*");
                 imageDownload.putExtra("crop", "true");
                 imageDownload.putExtra("aspectX", 1);
                 imageDownload.putExtra("aspectY", 1);
-                imageDownload.putExtra("outputX", 200);
-                imageDownload.putExtra("outputY", 200);
+                imageDownload.putExtra("outputX", 280);
+                imageDownload.putExtra("outputY", 280);
                 imageDownload.putExtra("return-data", true);
                 startActivityForResult(imageDownload, 2);
             }
@@ -96,11 +103,16 @@ public class EditPhotoActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2 && resultCode == RESULT_OK && data != null)
-        {
+        if(requestCode == 2 && resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
             Bitmap images = extras.getParcelable("data");
             image.setImageBitmap(images);
         }
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 }
