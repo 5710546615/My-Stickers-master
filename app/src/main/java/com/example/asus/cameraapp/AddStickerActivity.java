@@ -43,7 +43,8 @@ public class AddStickerActivity extends AppCompatActivity {
         addButton = (ImageButton) findViewById(R.id.btn_add);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(AddStickerActivity.this, ChooseActivity.class);
+                startActivity(intent);
             }
         });
 

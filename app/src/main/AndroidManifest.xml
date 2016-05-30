@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddStickerActivity"/>
+        <activity android:name=".ChooseActivity"/>
         <activity android:name=".DetailsActivity"/>
         <activity android:name=".EditPhotoActivity"/>
         <activity android:name=".GalleryActivity" />
