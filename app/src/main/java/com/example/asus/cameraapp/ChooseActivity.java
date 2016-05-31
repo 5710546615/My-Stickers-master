@@ -1,6 +1,7 @@
 package com.example.asus.cameraapp;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -52,11 +53,17 @@ public class ChooseActivity extends AppCompatActivity {
     private void initComponents(){
         skButton01.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.stk02);
+                AddStickerActivity.setSticker(icon);
                 finish();
             }
         });
         skButton02.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.stk02_1);
+                AddStickerActivity.setSticker(icon);
                 finish();
             }
         });

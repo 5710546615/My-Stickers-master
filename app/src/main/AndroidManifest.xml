@@ -4,14 +4,7 @@
 
     <uses-feature android:name="andriod.hardware.camera" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <receiver android:name=".MyReceiver">
-        <intent-filter>
-            <action android:name="com.tutorialspoint.CUSTOM_INTENT"></action>
-        </intent-filter>
-    </receiver>
 
     <application
         android:allowBackup="true"
@@ -22,17 +15,22 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddStickerActivity"/>
-        <activity android:name=".ChooseActivity"/>
-        <activity android:name=".DetailsActivity"/>
-        <activity android:name=".EditPhotoActivity"/>
-        <activity android:name=".GalleryActivity" />
+        <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".EditPhotoActivity"></activity>
+        <activity android:name=".AddStickerActivity"></activity>
         <activity android:name=".InfoPopUp"
-            android:theme="@style/AppTheme.CustomTheme">
-        </activity>
+            android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity android:name=".ChooseActivity"></activity>
     </application>
+
+    <intent-filter>
+        <action android:name="android.intent.action.MEDIA_MOUNTED" />
+        <data android:scheme="file" />
+    </intent-filter>
 
 </manifest>

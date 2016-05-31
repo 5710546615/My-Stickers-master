@@ -1,26 +1,18 @@
 package com.example.asus.cameraapp;
 
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.graphics.Matrix;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 public class EditPhotoActivity extends AppCompatActivity {
 
@@ -30,15 +22,11 @@ public class EditPhotoActivity extends AppCompatActivity {
     private ImageButton cropButton;
     private ImageButton backButton;
     private ImageButton doneButton;
-
-    private Bitmap bitmap;
+    private Bitmap bitmap,temp;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editphoto);
-
-        Intent intent = getIntent();
-        bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
 
         initComponents();
     }
@@ -48,20 +36,23 @@ public class EditPhotoActivity extends AppCompatActivity {
         cropText = (ImageView) findViewById(R.id.txt_crop);
         cropText.setImageResource(R.drawable.txt_crop);
 
+        Intent intent = getIntent();
+        bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
+        temp = bitmap;
+
         image = (ImageView) findViewById(R.id.img_image);
         image.setImageBitmap(bitmap);
 
         rotateButton = (ImageButton) findViewById(R.id.btn_rotate);
         rotateButton.setOnClickListener(new View.OnClickListener() {
 
-            Intent intent = getIntent();
-            Bitmap bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
             Matrix matrix = new Matrix();
 
             public void onClick(View view) {
                 matrix.postRotate(-90);
                 Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                 image.setImageBitmap(rotated);
+                temp = rotated;
             }
         });
 
@@ -69,7 +60,7 @@ public class EditPhotoActivity extends AppCompatActivity {
         cropButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent imageDownload = new Intent("com.android.camera.action.CROP");
-                imageDownload.setDataAndType(getImageUri(image.getContext(),bitmap),"image/*");
+                imageDownload.setDataAndType(getImageUri(image.getContext(), bitmap),"image/*");
                 imageDownload.putExtra("crop", "true");
                 imageDownload.putExtra("aspectX", 1);
                 imageDownload.putExtra("aspectY", 1);
@@ -83,12 +74,11 @@ public class EditPhotoActivity extends AppCompatActivity {
         backButton = (ImageButton) findViewById(R.id.btn_crop_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = getIntent();
-                Bitmap bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
                 Matrix matrix = new Matrix();
                 Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
                         matrix, true);
                 image.setImageBitmap(rotated);
+                temp = rotated;
             }
         });
 
@@ -96,6 +86,7 @@ public class EditPhotoActivity extends AppCompatActivity {
         doneButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(EditPhotoActivity.this, AddStickerActivity.class);
+                intent.putExtra("bitmap",temp);
                 startActivity(intent);
             }
         });
@@ -105,8 +96,9 @@ public class EditPhotoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 2 && resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
-            Bitmap images = extras.getParcelable("data");
-            image.setImageBitmap(images);
+            Bitmap cropImage = extras.getParcelable("data");
+            image.setImageBitmap(cropImage);
+            temp = cropImage;
         }
     }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
