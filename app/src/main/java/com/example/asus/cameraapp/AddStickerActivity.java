@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class AddStickerActivity extends AppCompatActivity {
@@ -116,7 +118,33 @@ public class AddStickerActivity extends AppCompatActivity {
         shareButton = (ImageButton) findViewById(R.id.btn_share);
         shareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                finish();
+                OutputStream output;
+
+                File filepath = Environment.getExternalStorageDirectory();
+
+                File dir = new File(filepath.getAbsolutePath() + "/Share Image/");
+                dir.mkdirs();
+
+                File file = new File(dir, "Image.png");
+
+                try {
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("image/jpeg");
+
+                    output = new FileOutputStream(file);
+
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+                    output.flush();
+                    output.close();
+
+                    Uri uri = Uri.fromFile(file);
+                    share.putExtra(Intent.EXTRA_STREAM, uri);
+
+                    startActivity(Intent.createChooser(share, "Share This Image .."));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
