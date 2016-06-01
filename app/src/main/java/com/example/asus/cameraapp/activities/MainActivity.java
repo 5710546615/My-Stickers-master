@@ -1,4 +1,4 @@
-package com.example.asus.cameraapp;
+package com.example.asus.cameraapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,8 +8,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.example.asus.cameraapp.R;
+import com.example.asus.cameraapp.Save;
+import com.example.asus.cameraapp.Utility;
+import com.example.asus.cameraapp.models.InfoPopUp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -21,11 +27,12 @@ public class MainActivity extends Activity {
 
     private ImageView logoImage;
     private ImageButton cameraButton, galleryButton;
+    private Button gallAppButton,gallDecButton;
 
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String userChoosenTask;
 
-    boolean result=Utility.checkPermission(MainActivity.this);
+    boolean result= Utility.checkPermission(MainActivity.this);
 
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -34,6 +41,11 @@ public class MainActivity extends Activity {
         logoImage = (ImageView) findViewById(R.id.img_logo);
         cameraButton = (ImageButton) findViewById(R.id.cameraButton);
         galleryButton = (ImageButton) findViewById(R.id.galleryButton);
+        gallAppButton = (Button) findViewById(R.id.galleryFAppButton);
+        gallDecButton = (Button) findViewById(R.id.galleryFDecButton);
+
+        gallDecButton.setVisibility(View.INVISIBLE);
+        gallAppButton.setVisibility(View.INVISIBLE);
 
         initComponents();
     }
@@ -44,8 +56,8 @@ public class MainActivity extends Activity {
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                userChoosenTask ="Take Photo";
-                if(result)
+                userChoosenTask = "Take Photo";
+                if (result)
                     cameraIntent();
             }
         });
@@ -53,9 +65,23 @@ public class MainActivity extends Activity {
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gallDecButton.setVisibility(View.VISIBLE);
+                gallAppButton.setVisibility(View.VISIBLE);
+            }
+        });
+        gallDecButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 userChoosenTask = "Choose from Library";
                 if (result)
                     galleryIntent();
+            }
+        });
+        gallAppButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,GalleryActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -100,9 +126,11 @@ public class MainActivity extends Activity {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
+/**
+        File folder = new File("/MyStickers");
+        File destination = new File (Environment.getExternalStorageDirectory().getAbsolutePath()+folder,
+                                System.currentTimeMillis() + ".jpg");
+        if(!folder.exists()) folder.mkdirs();
 
         FileOutputStream fo;
 
@@ -116,6 +144,9 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+ */
+        Save saveFile = new Save();
+        saveFile.SaveImage(getApplicationContext(), thumbnail);
 
         Intent intent = new Intent(this, EditPhotoActivity.class);
         intent.putExtra("BitmapImage", thumbnail);
@@ -126,10 +157,6 @@ public class MainActivity extends Activity {
         Bitmap bm=null;
         if (data != null) {
             try {
-//                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-//                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//                thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);

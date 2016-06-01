@@ -1,4 +1,4 @@
-package com.example.asus.cameraapp;
+package com.example.asus.cameraapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.graphics.Matrix;
+
+import com.example.asus.cameraapp.R;
 
 import java.io.ByteArrayOutputStream;
 
@@ -59,13 +61,19 @@ public class EditPhotoActivity extends AppCompatActivity {
         cropButton = (ImageButton) findViewById(R.id.btn_crop);
         cropButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Matrix mt = new Matrix();
+                mt.postScale(10,10);
+
+                Bitmap bm = Bitmap.createBitmap(bitmap, 0, 0,
+                        bitmap.getWidth(), bitmap.getHeight(), mt, true);
+
                 Intent imageDownload = new Intent("com.android.camera.action.CROP");
-                imageDownload.setDataAndType(getImageUri(image.getContext(), bitmap),"image/*");
+                imageDownload.setDataAndType(getImageUri(image.getContext(), bm),"image/*");
                 imageDownload.putExtra("crop", "true");
                 imageDownload.putExtra("aspectX", 1);
                 imageDownload.putExtra("aspectY", 1);
-                imageDownload.putExtra("outputX", 280);
-                imageDownload.putExtra("outputY", 280);
+                imageDownload.putExtra("outputX", 2048);
+                imageDownload.putExtra("outputY", 2048);
                 imageDownload.putExtra("return-data", true);
                 startActivityForResult(imageDownload, 2);
             }
@@ -74,11 +82,11 @@ public class EditPhotoActivity extends AppCompatActivity {
         backButton = (ImageButton) findViewById(R.id.btn_crop_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Matrix matrix = new Matrix();
-                Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
-                        matrix, true);
-                image.setImageBitmap(rotated);
-                temp = rotated;
+//                Matrix matrix = new Matrix();
+//                Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+//                        matrix, true);
+                image.setImageBitmap(bitmap);
+                temp = bitmap;
             }
         });
 
@@ -102,8 +110,8 @@ public class EditPhotoActivity extends AppCompatActivity {
         }
     }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }

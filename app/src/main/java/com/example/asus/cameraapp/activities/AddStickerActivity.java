@@ -1,60 +1,65 @@
-package com.example.asus.cameraapp;
+package com.example.asus.cameraapp.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.io.ByteArrayOutputStream;
+import com.example.asus.cameraapp.models.InfoPopUp;
+import com.example.asus.cameraapp.R;
+import com.example.asus.cameraapp.Save;
+import com.example.asus.cameraapp.stickers.StickerView;
+
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class AddStickerActivity extends AppCompatActivity {
-    private Bitmap bitmap;
-    private ImageView image;
-    private static ArrayList<Bitmap> stickers = new ArrayList<>();
-    public static ImageView sticker1;
+    private Bitmap bitmap, temp;
+    private static ImageView image;
     private ImageButton homeButton;
     private ImageButton addButton;
     private ImageButton saveButton;
     private ImageButton shareButton;
     private ImageButton reverseButton;
     private ImageButton infoButton;
+    private static Resources resources;
+    private static StickerView stickerView;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addsticker);
 
+        resources = getResources();
         bitmap = getIntent().getParcelableExtra("bitmap");
+        temp = bitmap;
         image = (ImageView)findViewById(R.id.img_image);
 
-        StickerView stickerView = new StickerView(this);
+        stickerView = new StickerView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.img_image);
         params.addRule(RelativeLayout.ALIGN_TOP, R.id.img_image);
         ((ViewGroup)image.getParent()).addView(stickerView, params);
-        Bitmap StickerBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        stickerView.setWaterMark(StickerBitmap);
 
         initComponents();
     }
@@ -82,7 +87,7 @@ public class AddStickerActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(temp);
 
         homeButton = (ImageButton) findViewById(R.id.btn_home);
 
@@ -104,14 +109,12 @@ public class AddStickerActivity extends AppCompatActivity {
         saveButton = (ImageButton) findViewById(R.id.btn_save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                fix
-//                bitmap = mergeToPin(bitmap, stickers.get(0));
-//                image.setImageBitmap(bitmap);
+                Bitmap sticker = stickerView.getBitmap();
+                temp = mergeBitmap(temp, sticker);
+                image.setImageBitmap(temp);
 
-                Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-
-                Save savefile = new Save();
-                savefile.SaveImage(getApplicationContext(), bitmap);
+                Save saveFile = new Save();
+                saveFile.SaveImage(getApplicationContext(), temp);
             }
         });
 
@@ -154,31 +157,18 @@ public class AddStickerActivity extends AppCompatActivity {
                 Matrix matrix = new Matrix();
                 Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
                         matrix, true);
+                image = (ImageView) findViewById(R.id.img_image);
                 image.setImageBitmap(rotated);
-
-//                Bitmap myImg = getIntent().getParcelableExtra("bitmap");
-////                Matrix matrix = new Matrix();
-////                Bitmap rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
-////                        matrix, true);
-//                image.setImageBitmap(myImg);
-//                sticker1.setImageBitmap(null);
+                temp = rotated;
             }
         });
 
         infoButton = (ImageButton) findViewById(R.id.btn_info);
         infoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(AddStickerActivity.this, InfoPopUp.class);
-                startActivity(intent);
+                startActivity(new Intent(AddStickerActivity.this, InfoPopUp.class));
             }
         });
-    }
-
-    public static void setSticker(Bitmap bitmap) {
-        sticker1.setImageBitmap(bitmap);
-        if(stickers.size()==0)
-        stickers.add(bitmap);
-        else stickers.set(0, bitmap);
     }
 
     public static Bitmap mergeToPin(Bitmap back, Bitmap front) {
@@ -188,42 +178,43 @@ public class AddStickerActivity extends AppCompatActivity {
         int widthFront = front.getWidth();
         float move = (widthBack - widthFront) / 2;
         canvas.drawBitmap(back, 0f, 0f, null);
+        result = Bitmap.createBitmap(front.getWidth(), front.getHeight(), front.getConfig());
+        canvas.setBitmap(result);
         canvas.drawBitmap(front, 0, 0, null);
         return result;
     }
 
-//    public Bitmap combineImages(Bitmap c, Bitmap s) { // can add a 3rd parameter 'String loc' if you want to save the new image - left some code to do that at the bottom
-//        Bitmap cs = null;
-//
-//        int width, height = 0;
-//
-//        if(c.getWidth() > s.getWidth()) {
-//            width = c.getWidth() + s.getWidth();
-//            height = c.getHeight();
-//        } else {
-//            width = s.getWidth() + s.getWidth();
-//            height = c.getHeight();
-//        }
-//
-//        cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-//
-//        Canvas comboImage = new Canvas(cs);
-//
-//        comboImage.drawBitmap(c, 0f, 0f, null);
-//        comboImage.drawBitmap(s, c.getWidth(), 0f, null);
-//
-//        // this is an extra bit I added, just incase you want to save the new image somewhere and then return the location
-//    /*String tmpImg = String.valueOf(System.currentTimeMillis()) + ".png";
-//
-//    OutputStream os = null;
-//    try {
-//      os = new FileOutputStream(loc + tmpImg);
-//      cs.compress(CompressFormat.PNG, 100, os);
-//    } catch(IOException e) {
-//      Log.e("combineImages", "problem combining images", e);
-//    }*/
-//
-//        return cs;
-//    }
+    public Bitmap mergeBitmap(Bitmap back, Bitmap front){
+        Bitmap bitmap = null;
+        try {
+
+            bitmap = Bitmap.createBitmap(back.getWidth(), back.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            Resources res = resources;
+
+            Drawable drawable1 = new BitmapDrawable(back);
+            Drawable drawable2 = new BitmapDrawable(front);
+
+            Log.e("left-right",back.getScaledWidth(c)/2 + back.getWidth()/2+"");
+            Log.e("up-down", back.getScaledHeight(c) / 2 + back.getHeight() / 2 + "");
+
+
+//            drawble1 = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 50, 50, true));
+
+            drawable1.setBounds(0, 0, back.getWidth(), back.getHeight());
+            drawable2.setBounds(0,0, back.getWidth(), back.getHeight());
+            drawable1.draw(c);
+            drawable2.draw(c);
+
+
+        } catch (Exception e) {
+        }
+        return bitmap;
+    }
+
+    public static void setSticker(int id) {
+        Bitmap StickerBitmap = BitmapFactory.decodeResource(resources, id);
+        stickerView.setWaterMark(StickerBitmap);
+    }
 
 }

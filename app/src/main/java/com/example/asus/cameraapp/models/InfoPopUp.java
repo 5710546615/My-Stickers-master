@@ -1,8 +1,10 @@
-package com.example.asus.cameraapp;
+package com.example.asus.cameraapp.models;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+
+import com.example.asus.cameraapp.R;
 
 public class InfoPopUp extends Activity{
 
@@ -17,7 +19,7 @@ public class InfoPopUp extends Activity{
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width * .8),(int)(height*.6));
+        getWindow().setLayout((int)(width * .85),(int)(height*.6));
 
     }
 }
