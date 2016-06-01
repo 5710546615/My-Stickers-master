@@ -25,7 +25,7 @@
         <activity android:name=".activities.EditPhotoActivity"></activity>
         <activity android:name=".activities.AddStickerActivity"></activity>
         <activity android:name=".activities.ChooseActivity"></activity>
-        <activity android:name=".models.InfoPopUp"
+        <activity android:name=".activities.InfoPopUpActivity"
             android:theme="@style/AppTheme.CustomTheme" ></activity>
     </application>
 

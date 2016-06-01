@@ -52,7 +52,7 @@ public class EditPhotoActivity extends AppCompatActivity {
 
             public void onClick(View view) {
                 matrix.postRotate(-90);
-                Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                Bitmap rotated = Bitmap.createBitmap(temp, 0, 0, temp.getWidth(), temp.getHeight(), matrix, true);
                 image.setImageBitmap(rotated);
                 temp = rotated;
             }
@@ -61,21 +61,25 @@ public class EditPhotoActivity extends AppCompatActivity {
         cropButton = (ImageButton) findViewById(R.id.btn_crop);
         cropButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Matrix mt = new Matrix();
-                mt.postScale(10,10);
+                cropButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        Matrix mt = new Matrix();
+                        mt.postScale(10,10);
 
-                Bitmap bm = Bitmap.createBitmap(bitmap, 0, 0,
-                        bitmap.getWidth(), bitmap.getHeight(), mt, true);
+                        Bitmap bm = Bitmap.createBitmap(temp, 0, 0,
+                                temp.getWidth(), temp.getHeight(), mt, true);
 
-                Intent imageDownload = new Intent("com.android.camera.action.CROP");
-                imageDownload.setDataAndType(getImageUri(image.getContext(), bm),"image/*");
-                imageDownload.putExtra("crop", "true");
-                imageDownload.putExtra("aspectX", 1);
-                imageDownload.putExtra("aspectY", 1);
-                imageDownload.putExtra("outputX", 2048);
-                imageDownload.putExtra("outputY", 2048);
-                imageDownload.putExtra("return-data", true);
-                startActivityForResult(imageDownload, 2);
+                        Intent imageDownload = new Intent("com.android.camera.action.CROP");
+                        imageDownload.setDataAndType(getImageUri(image.getContext(), bm),"image/*");
+                        imageDownload.putExtra("crop", "true");
+                        imageDownload.putExtra("aspectX", 1);
+                        imageDownload.putExtra("aspectY", 1);
+                        imageDownload.putExtra("outputX", 128);
+                        imageDownload.putExtra("outputY", 128);
+                        imageDownload.putExtra("return-data", true);
+                        startActivityForResult(imageDownload, 2);
+                    }
+                });
             }
         });
 

@@ -18,75 +18,75 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_add"
-            android:src="@drawable/img_info_add"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/img_info_shrink" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_add"
+                    android:src="@drawable/img_info_add"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignLeft="@+id/img_info_shrink" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_move"
-            android:src="@drawable/img_info_move"
-            android:layout_below="@+id/img_info_add"
-            android:layout_alignLeft="@+id/img_info_add" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_move"
+                    android:src="@drawable/img_info_move"
+                    android:layout_below="@+id/img_info_add"
+                    android:layout_alignLeft="@+id/img_info_add" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_shrink"
-            android:src="@drawable/img_info_shrink"
-            android:layout_below="@+id/img_info_move"
-            android:layout_centerHorizontal="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_shrink"
+                    android:src="@drawable/img_info_shrink"
+                    android:layout_below="@+id/img_info_move"
+                    android:layout_centerHorizontal="true" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_enlarge"
-            android:layout_below="@+id/img_info_shrink"
-            android:layout_alignLeft="@+id/img_info_shrink"
-            android:src="@drawable/img_info_enlarge" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_enlarge"
+                    android:layout_below="@+id/img_info_shrink"
+                    android:layout_alignLeft="@+id/img_info_shrink"
+                    android:src="@drawable/img_info_enlarge" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_rotate"
-            android:src="@drawable/img_info_rotate"
-            android:layout_above="@+id/img_info_move"
-            android:layout_centerHorizontal="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_rotate"
+                    android:src="@drawable/img_info_rotate"
+                    android:layout_above="@+id/img_info_move"
+                    android:layout_centerHorizontal="true" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_delete"
-            android:layout_below="@+id/img_info_rotate"
-            android:layout_alignLeft="@+id/img_info_rotate"
-            android:layout_alignStart="@+id/img_info_rotate"
-            android:src="@drawable/img_info_delete" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_delete"
+                    android:layout_below="@+id/img_info_rotate"
+                    android:layout_alignLeft="@+id/img_info_rotate"
+                    android:layout_alignStart="@+id/img_info_rotate"
+                    android:src="@drawable/img_info_delete" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_flipx"
-            android:src="@drawable/img_info_flipx"
-            android:layout_above="@+id/img_info_enlarge"
-            android:layout_centerHorizontal="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_flipx"
+                    android:src="@drawable/img_info_flipx"
+                    android:layout_above="@+id/img_info_enlarge"
+                    android:layout_centerHorizontal="true" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_info_flipy"
-            android:src="@drawable/img_info_flipy"
-            android:layout_alignTop="@+id/img_info_enlarge"
-            android:layout_centerHorizontal="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_info_flipy"
+                    android:src="@drawable/img_info_flipy"
+                    android:layout_alignTop="@+id/img_info_enlarge"
+                    android:layout_centerHorizontal="true" />
 
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
 
-    
+
 </LinearLayout>
